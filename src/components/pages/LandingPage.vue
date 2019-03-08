@@ -3,7 +3,7 @@
     <Jumbotron
       :height="'50'"
       :className="'text-white font-weight-bold'"
-      :bg="'/static/vitor-santos-62290-unsplash.jpg'">
+      :bg="'./static/vitor-santos-62290-unsplash.jpg'">
       <div slot="title">開學季</div>
       <div slot="footer">文具用品大特惠</div>
       <div slot="btn">
@@ -13,7 +13,7 @@
     <Jumbotron
       :height="'50vh'"
       :className="'text-white font-weight-bold align-self-end'"
-      :bg="'/static/jc-gellidon-715597-unsplash.jpg'">
+      :bg="'./static/jc-gellidon-715597-unsplash.jpg'">
       <div slot="title">旅遊季</div>
       <div slot="footer">多久，沒有一個人漫步旅行了呢？</div>
       <div slot="btn">

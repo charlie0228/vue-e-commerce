@@ -33,7 +33,7 @@ export default {
     },
     bg: {
       type: String,
-      default: "'/static/vitor-santos-62290-unsplash.jpg'",
+      default: "'./static/vitor-santos-62290-unsplash.jpg'",
     },
     className: {
       type: String,
