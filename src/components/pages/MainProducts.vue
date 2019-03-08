@@ -35,39 +35,38 @@
         </div>
       </div>
       <div class="col-9">
-        <div class="row">
-          <div class="col my-4 h4 text-danger" v-if="filter_product === null">
-            選取的商品分類不存在，請重新點選左側選單！
-          </div>
-          <div class="col-6" v-for="item in filter_product" :key="item.id">
-            <div class="card border-0 h-100 bg-light my-2">
-              <div class="card-body">
-                <img :src="item.imageUrl" class="card-img-top" alt="...">
-                <h4 class="card-text bg-light text-black opacity-75 card-hover-title">
-                  {{ item.title }}
-                </h4>
-                <blockquote class="blockquote px-1 pt-1">
-                  {{ item.content }}
-                  <footer class="blockquote-footer text-right">
-                    {{ item.description }}
-                  </footer>
-                </blockquote>
-                <div class="card-footer bg-light border-0 px-1">
-                  <div class="row align-items-center">
-                    <div class="col h5">特價：{{ item.price | currency }}</div>
-                    <div class="w-100"></div>
-                    <div class="col"></div>
-                    <div class="col-10 text-right">
-                      <div class="btn-group">
-                        <router-link class="btn btn-outline-primary"
-                          :to="`/product/detail/${item.id}`" >
-                          產品細節
-                        </router-link>
-                        <a href="#" class="btn btn-danger"
-                          @click.prevent="addtoCart(item.id)">
-                          加入購物車
-                        </a>
-                      </div>
+        <div class="my-4 h4 text-danger" v-if="filter_product === null">
+          選取的商品分類不存在，請重新點選左側選單！
+        </div>
+        <div class="card-columns my-3" style="column-count: 2;" v-else>
+          <div class="card border-1 shadow-sm h-100 bg-light my-2"
+            v-for="item in filter_product" :key="item.id">
+            <div class="card-body">
+              <img :src="item.imageUrl" class="card-img-top" alt="...">
+              <h4 class="card-text bg-light text-black opacity-75 card-hover-title">
+                {{ item.title }}
+              </h4>
+              <blockquote class="blockquote px-1 pt-1">
+                {{ item.content }}
+                <footer class="blockquote-footer text-right">
+                  {{ item.description }}
+                </footer>
+              </blockquote>
+              <div class="card-footer bg-light border-0 px-1">
+                <div class="row align-items-center">
+                  <div class="col h5">特價：{{ item.price | currency }}</div>
+                  <div class="w-100"></div>
+                  <div class="col"></div>
+                  <div class="col-10 text-right">
+                    <div class="btn-group">
+                      <router-link class="btn btn-outline-primary"
+                        :to="`/product/detail/${item.id}`" >
+                        產品細節
+                      </router-link>
+                      <a href="#" class="btn btn-danger"
+                        @click.prevent="addtoCart(item.id)">
+                        加入購物車
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -75,6 +74,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>

@@ -33,17 +33,17 @@ export default new Router({
           component: LandingPage,
         },
         {
-          path: '/product/:category',
+          path: 'product/:category',
           name: 'Product',
           component: MainProducts,
         },
         {
-          path: '/product/detail/:id',
+          path: 'product/detail/:id',
           name: 'ProductDetail',
           component: ProductDetail,
         },
         {
-          path: '/cart',
+          path: 'cart',
           name: 'Cart',
           component: Cart,
         },

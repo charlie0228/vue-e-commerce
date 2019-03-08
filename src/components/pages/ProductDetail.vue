@@ -18,6 +18,8 @@
       <div class="col-4 d-flex flex-column justify-content-end align-items-left">
         <h2>{{ product.title }}</h2>
           <blockquote class="blockquote px-1 pt-3">
+            特價：{{ product.price | currency }} <br />
+            <br />
             {{ product.content }}
             <footer class="blockquote-footer text-right">
               {{ product.description }}

@@ -16,7 +16,7 @@
               <router-link class="nav-link" to="/cart">Cart</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About Me</a>
+              <a class="nav-link" href="https://bit.ly/charlie0228" target="_blank">About Me</a>
             </li>
           </ul>
           <!-- <form class="form-inline my-2 my-lg-0">
@@ -65,8 +65,8 @@
                 </div>
                 <div v-else>
                   <router-link
-                    class="list-group-item list-group-item-action text-success"
-                    to="/product">
+                    class="list-group-item list-group-item-action text-primary"
+                    to="/product/all">
                     您的購物車是空的，快去商品區選購吧！
                   </router-link>
                 </div>
@@ -88,13 +88,13 @@
     </div>
 
     <router-view :cartRenew="cartRenew"></router-view>
-
-    <footer class="footer mt-auto py-3">
+    <div class="fixed-bottom-margin"></div>
+    <footer class="footer mt-auto py-2 fixed-bottom bg-dark">
       <div class="container">
         <span class="text-muted">Design by AzureBlue</span>
         <br />
         <span class="text-muted">
-          僅為作品使用
+          圖片僅作為作品使用，不做商業用途
           <router-link to="/admin">Admin</router-link>
         </span>
       </div>
@@ -190,5 +190,11 @@ export default {
     min-width: 400px;
     padding: 0;
     margin: 0;
+  }
+  .footer {
+    height: 58px;
+  }
+  .fixed-bottom-margin {
+    height: 58px;
   }
 </style>
