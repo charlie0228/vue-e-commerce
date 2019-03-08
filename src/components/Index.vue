@@ -88,6 +88,17 @@
     </div>
 
     <router-view :cartRenew="cartRenew"></router-view>
+
+    <footer class="footer mt-auto py-3">
+      <div class="container">
+        <span class="text-muted">Design by AzureBlue</span>
+        <br />
+        <span class="text-muted">
+          僅為作品使用
+          <router-link to="/admin">Admin</router-link>
+        </span>
+      </div>
+    </footer>
   </div>
 </template>
 

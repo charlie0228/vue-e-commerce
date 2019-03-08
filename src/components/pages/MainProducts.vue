@@ -107,7 +107,9 @@ export default {
         console.log(res.data);
         vm.products = res.data.products;
         vm.products.forEach((item) => {
-          category.add(item.category);
+          if (item.is_enabled) {
+            category.add(item.category);
+          }
         });
         vm.category = [...category];
         vm.isLoading = false;
@@ -120,7 +122,7 @@ export default {
       this.$http.get(api).then((res) => {
         console.log(res.data);
         if (cat === 'all') {
-          vm.filter_product = res.data.products;
+          vm.filter_product = res.data.products.filter(item => (item.is_enabled));
         } else {
           vm.filter_product = res.data.products.filter(item => (item.category === cat));
         }

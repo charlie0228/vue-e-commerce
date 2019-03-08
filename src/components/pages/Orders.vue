@@ -9,6 +9,7 @@
           <th>購買款項</th>
           <th>應付金額</th>
           <th>是否付款</th>
+          <th>Remove Detail</th>
         </tr>
       </thead>
       <tbody>
@@ -30,6 +31,9 @@
             <strong v-if="item.is_paid" class="text-success">已付款</strong>
             <span v-else class="text-muted">尚未啟用</span>
           </td>
+          <td>
+            <a href="#" @click.prevent="removeOrderDetail(item.id)">清空訂購資料</a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -49,6 +53,20 @@ export default {
       pagination: {},
       orders: [],
       isLoading: false,
+      empty: {
+        create_at: 0,
+        is_paid: false,
+        message: '',
+        payment_method: '',
+        products: [],
+        total: 0,
+        user: {
+          name: '',
+          email: '',
+          tel: '',
+          address: '',
+        },
+      },
     };
   },
   components: {
@@ -64,6 +82,16 @@ export default {
         vm.isLoading = false;
         vm.orders = res.data.orders;
         vm.pagination = res.data.pagination;
+      });
+    },
+    removeOrderDetail(id) {
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/order/${id}`;
+      const vm = this;
+      vm.isLoading = true;
+      this.$http.put(api, { data: vm.empty }).then((res) => {
+        console.log(res.data);
+        vm.isLoading = false;
+        vm.getOrders();
       });
     },
   },
