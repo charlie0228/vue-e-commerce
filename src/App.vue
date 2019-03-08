@@ -12,4 +12,7 @@ export default {
 
 <style lang="scss">
 @import "./assets/all";
+body {
+  background: $gray-100;
+}
 </style>

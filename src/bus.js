@@ -3,6 +3,11 @@ import Vue from 'vue';
 Vue.prototype.$bus = new Vue();
 
 // Message
-// vm.$bus.$emit('messsage:push', message, status);
+// @/components/AlertMessage.vue
+// vm.$bus.$emit('message:push', message, status);
 // message(String): 訊息內容
 // status(String): Alert 的樣式
+
+// CartReload
+// @/components/Index.vue
+// vm.$bus.$emit('cart:reload');

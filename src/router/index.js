@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import HelloWorld from '@/components/HelloWorld';
+import Index from '@/components/Index';
 import Dashboard from '@/components/Dashboard';
 import Login from '@/components/pages/Login';
 import Products from '@/components/pages/Products';
@@ -8,6 +8,11 @@ import Coupons from '@/components/pages/Coupons';
 import Orders from '@/components/pages/Orders';
 import CustomerOrder from '@/components/pages/CustomerOrders';
 import CustomerCheckout from '@/components/pages/CustomerCheckout';
+import LandingPage from '@/components/pages/LandingPage';
+import MainProducts from '@/components/pages/MainProducts';
+import ProductDetail from '@/components/pages/ProductDetail';
+import Cart from '@/components/pages/Cart';
+import Checkout from '@/components/pages/Checkout';
 
 Vue.use(Router);
 
@@ -18,12 +23,37 @@ export default new Router({
       path: '*',
       redirect: '/login',
     },
-    // {
-    //   path: '/',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld,
-    //   meta: { requiresAuth: true },
-    // },
+    {
+      path: '/',
+      component: Index,
+      children: [
+        {
+          path: '/',
+          name: 'Home',
+          component: LandingPage,
+        },
+        {
+          path: '/product/:category',
+          name: 'Product',
+          component: MainProducts,
+        },
+        {
+          path: '/product/detail/:id',
+          name: 'ProductDetail',
+          component: ProductDetail,
+        },
+        {
+          path: '/cart',
+          name: 'Cart',
+          component: Cart,
+        },
+        {
+          path: 'checkout/:orderId',
+          name: 'Checkout',
+          component: Checkout,
+        },
+      ],
+    },
     {
       path: '/login',
       name: 'Login',

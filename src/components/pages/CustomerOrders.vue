@@ -203,14 +203,13 @@ export default {
   },
   methods: {
     getProducts() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products`;
+      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then((res) => {
         console.log(res.data);
         vm.isLoading = false;
         vm.products = res.data.products;
-        vm.pagination = res.data.pagination;
       });
     },
     getProduct(id) {
@@ -256,7 +255,6 @@ export default {
       vm.isLoading = true;
       this.$http.delete(api).then((res) => {
         console.log(res.data);
-        vm.cart = res.data.data;
         this.getCart();
         vm.isLoading = false;
       });
