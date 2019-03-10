@@ -1,7 +1,17 @@
 <template>
   <div class="container">
     <div class="row">
-      <table class="table" v-if="cart.carts">
+      <div class="col d-flex flex-column justify-content-center"
+        style="height: calc(100vh - 155px)" v-if="!cart.carts.length">
+        <div class="h2 text-center text-muted">
+          您的購物車是空的，快去商品區選購吧！<br />
+          <br />
+          <router-link class="display-3" to="/product/all">
+            <i class="fas fa-cart-plus"></i>
+          </router-link>
+        </div>
+      </div>
+      <table class="table" v-else>
         <thead>
           <th></th>
           <th>品名</th>
@@ -38,7 +48,7 @@
         </tfoot>
       </table>
     </div>
-    <div class="row">
+    <div class="row" v-if="cart.carts.length">
       <div class="col-6"></div>
       <div class="col-6">
         <div class="input-group mb-3 input-group-sm">
@@ -50,6 +60,8 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
       <div class="col" v-if="cart.carts.length">
         <div class="my-5 row justify-content-center">
           <form class="col-md-6" @submit.prevent="createOrder">
@@ -107,7 +119,9 @@
 export default {
   data() {
     return {
-      cart: {},
+      cart: {
+        carts: [],
+      },
       form: {
         user: {
           name: '',

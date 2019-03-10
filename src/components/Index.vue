@@ -57,16 +57,16 @@
                     </span>
                   </li>
                   <li class="list-group-item d-flex justify-content-end">
-                    <button class="btn btn-danger d-flex align-items-center">
+                    <router-link to="/cart" class="btn btn-danger d-flex align-items-center">
                       <i class="fas fa-shopping-cart align-bottom"></i>
                       <span class="pl-2">結帳去</span>
-                    </button>
+                    </router-link>
                   </li>
                 </div>
                 <div v-else>
                   <router-link
                     class="list-group-item list-group-item-action text-primary"
-                    to="/product/all">
+                    to="/product/all" active-class="">
                     您的購物車是空的，快去商品區選購吧！
                   </router-link>
                 </div>
@@ -174,7 +174,7 @@ export default {
 
 <style lang='scss' scoped>
   .bg-light {
-      a {
+      > a {
         background-color: transparent !important;
         :hover {
           background-color: transparent !important;

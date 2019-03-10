@@ -41,6 +41,9 @@
         <img class="img-fluid" :src="product.imageUrl" alt="" />
       </div>
     </div>
+    <div class="row">
+      <div class="col" style="margin-bottom:58px;"></div>
+    </div>
   </div>
 </template>
 
