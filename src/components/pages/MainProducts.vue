@@ -8,30 +8,17 @@
   </Jumbotron>
   <div class="container">
     <div class="row">
-      <loading :active.sync="isLoading"></loading>
       <div class="col-3">
         <div class="list-group sticky-top pt-4 mb-5">
           <router-link class="list-group-item list-group-item-action"
             to="/product/all">
             所有商品
           </router-link>
-          <!-- <a href="#" class="list-group-item list-group-item-action"
-            :class="{'active': !filter_category}"
-            @click.prevent="filterProdcuts()">
-            所有商品
-          </a> -->
           <router-link class="list-group-item list-group-item-action"
             :to="`/product/${item}`"
             v-for="(item, index) in category" :key="index">
             {{ item }}
           </router-link>
-
-          <!-- <a href="#" class="list-group-item list-group-item-action"
-            :class="{'active': filter_category === item}"
-            @click.prevent="filterProdcuts(item)"
-            v-for="(item, index) in category" :key="index">
-            {{ item }}
-          </a> -->
         </div>
       </div>
       <div class="col-9">
@@ -64,7 +51,7 @@
                         產品細節
                       </router-link>
                       <a href="#" class="btn btn-danger"
-                        @click.prevent="addtoCart(item.id)">
+                        @click.prevent="addtoCart({ id:item.id, qty:1 })">
                         加入購物車
                       </a>
                     </div>
@@ -74,7 +61,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -83,76 +69,32 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import Jumbotron from '@/components/Jumbotron';
 
 export default {
   data() {
     return {
-      products: [],
-      category: [],
-      filter_product: [],
-      isLoading: false,
     };
   },
   components: {
     Jumbotron,
   },
   methods: {
-    getProducts() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
-      const vm = this;
-      const category = new Set();
-      vm.isLoading = true;
-      this.$http.get(api).then((res) => {
-        console.log(res.data);
-        vm.products = res.data.products;
-        vm.products.forEach((item) => {
-          if (item.is_enabled) {
-            category.add(item.category);
-          }
-        });
-        vm.category = [...category];
-        vm.isLoading = false;
-      });
-    },
-    filterProdcuts(cat) {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((res) => {
-        console.log(res.data);
-        if (cat === 'all') {
-          vm.filter_product = res.data.products.filter(item => (item.is_enabled));
-        } else {
-          vm.filter_product = res.data.products.filter(item => (item.category === cat));
-        }
-        if (vm.filter_product.length === 0) {
-          vm.filter_product = null;
-        }
-        vm.isLoading = false;
-      });
-    },
-    addtoCart(id, qty = 1) {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
-      const cart = {
-        product_id: id,
-        qty,
-      };
-      this.$http.post(api, { data: cart }).then((res) => {
-        console.log(res.data);
-        vm.$bus.$emit('cart:reolad');
-      });
-    },
+    ...mapActions('productModules', ['getProducts', 'filterProducts']),
+    ...mapActions('cartModules', ['addtoCart']),
+  },
+  computed: {
+    ...mapGetters('productModules', ['products', 'category', 'filter_product']),
   },
   created() {
     this.getProducts();
-    this.filterProdcuts(this.$route.params.category);
+    this.filterProducts(this.$route.params.category);
   },
   watch: {
     // eslint-disable-next-line
     '$route.params.category': function (val) {
-      this.filterProdcuts(val);
+      this.filterProducts(val);
     },
   },
 };

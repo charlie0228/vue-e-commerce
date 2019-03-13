@@ -72,23 +72,23 @@ export default {
     getOrder() {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order/${this.orderId}`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((res) => {
         console.log(res.data.order);
         vm.order = res.data.order;
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
       });
     },
     payOrder() {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/pay/${this.orderId}`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(api).then((res) => {
         console.log(res.data);
         if (res.data.success) {
           vm.getOrder();
         }
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
       });
     },
   },
@@ -96,7 +96,7 @@ export default {
     this.orderId = this.$route.params.orderId;
     console.log(this.orderId);
     this.getOrder();
-    this.$bus.$emit('cart:reolad');
+    this.$store.dispatch('cartModules/getCart');
   },
 };
 </script>

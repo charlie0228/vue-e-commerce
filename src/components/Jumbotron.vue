@@ -56,10 +56,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  // .vertical-center {
-  //   min-height: 100%;
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  // }
+
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <loading :active.sync="isLoading"></loading>
     <div class="row">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-light h6">
@@ -33,7 +32,9 @@
             </select>
             <div class="input-group-append">
               <button class="btn btn-success" type="button"
-                @click.prevent="addtoCart">加入購物車</button>
+                @click.prevent="addtoCart({ id: product_id, qty:product.num })">
+                加入購物車
+              </button>
             </div>
           </div>
       </div>
@@ -48,40 +49,28 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
       product_id: this.$route.params.id,
       product: {},
-      isLoading: false,
     };
   },
   methods: {
     getProduct() {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${this.$route.params.id}`;
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.get(api).then((res) => {
         console.log(res.data);
         vm.product = res.data.product;
         vm.product.num = 1;
-        vm.isLoading = false;
+        vm.$store.dispatch('updateLoading', false);
       });
     },
-    addtoCart() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
-      vm.isLoading = true;
-      const cart = {
-        product_id: vm.product_id,
-        qty: vm.product.num,
-      };
-      this.$http.post(api, { data: cart }).then((res) => {
-        console.log(res.data);
-        vm.$bus.$emit('cart:reolad');
-        vm.isLoading = false;
-      });
-    },
+    ...mapActions('cartModules', ['addtoCart']),
   },
   created() {
     this.getProduct();

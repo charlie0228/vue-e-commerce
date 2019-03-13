@@ -2,6 +2,16 @@
 
 > 作品集：Vue.js 電商網站
 
+使用套件：
+
+    axios,
+    bootstrap,
+    moment,
+    vee-validate,
+    vue,
+    vue-router,
+    vuex
+
 [作品網址](https://charlie0228.github.io/vue-e-commerce/)
 
 [GitHub Pages 上傳教學](https://medium.com/@4a490063/%E6%8A%8A-vue-cli-%E5%B0%88%E6%A1%88%E9%83%A8%E5%B1%AC%E5%88%B0-github-pages-%E4%B8%8A-5e85dad69661)

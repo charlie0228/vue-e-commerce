@@ -116,12 +116,11 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   data() {
     return {
-      cart: {
-        carts: [],
-      },
       form: {
         user: {
           name: '',
@@ -132,49 +131,22 @@ export default {
         message: '',
       },
       coupon_code: '',
-      isLoading: false,
     };
   },
-  props: {
-    cartRenew: {
-      default: false,
-    },
-  },
   methods: {
-    getCart() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((res) => {
-        console.log(res.data);
-        vm.cart = res.data.data;
-        vm.isLoading = false;
-      });
-    },
-    removeCartItem(id) {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.delete(api).then((res) => {
-        console.log(res.data);
-        this.getCart();
-        vm.$bus.$emit('cart:reolad');
-        vm.isLoading = false;
-      });
-    },
+    ...mapActions('cartModules', ['removeCartItem', 'getCart']),
     addCouponCode() {
       const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
       const vm = this;
       const coupon = {
         code: vm.coupon_code,
       };
-      vm.isLoading = true;
+      vm.$store.dispatch('updateLoading', true);
       this.$http.post(api, { data: coupon }).then((res) => {
         console.log(res.data);
         vm.cart = res.data.data;
-        this.getCart();
-        vm.$bus.$emit('cart:reolad');
-        vm.isLoading = false;
+        vm.getCart();
+        vm.$store.dispatch('updateLoading', false);
       });
     },
     createOrder() {
@@ -183,13 +155,13 @@ export default {
       const order = vm.form;
       this.$validator.validate().then((result) => {
         if (result) {
-          vm.isLoading = true;
+          vm.$store.dispatch('updateLoading', true);
           this.$http.post(api, { data: order }).then((res) => {
             console.log('成功送出', res.data);
             if (res.data.success) {
               vm.$router.push(`/checkout/${res.data.orderId}`);
             }
-            vm.isLoading = false;
+            vm.$store.dispatch('updateLoading', false);
           });
         } else {
           console.log('欄位不完整');
@@ -197,16 +169,11 @@ export default {
       });
     },
   },
+  computed: {
+    ...mapGetters('cartModules', ['cart']),
+  },
   created() {
     this.getCart();
-  },
-  watch: {
-    cartRenew(val, Oldval) {
-      if (Oldval === true) {
-        // 等待API更新
-        setTimeout(this.getCart(), 500);
-      }
-    },
   },
 };
 </script>

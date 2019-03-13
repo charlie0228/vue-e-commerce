@@ -7,7 +7,3 @@ Vue.prototype.$bus = new Vue();
 // vm.$bus.$emit('message:push', message, status);
 // message(String): 訊息內容
 // status(String): Alert 的樣式
-
-// CartReload
-// @/components/Index.vue
-// vm.$bus.$emit('cart:reload');

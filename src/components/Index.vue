@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
     <div class="container-fluid bg-light sticky-top">
       <nav class="navbar navbar-expand navbar-light bg-light" style="height: 85px;">
         <router-link class="navbar-brand bg-light shadow-none h3" to="/">
@@ -87,7 +86,7 @@
       </div>
     </div>
 
-    <router-view :cartRenew="cartRenew"></router-view>
+    <router-view></router-view>
     <div class="fixed-bottom-margin"></div>
     <footer class="footer mt-auto py-2 fixed-bottom bg-dark">
       <div class="container">
@@ -103,41 +102,16 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   data() {
     return {
-      cart: {
-        carts: [],
-      },
-      isLoading: false,
       isLogin: false,
       cartRenew: false,
     };
   },
   methods: {
-    getCart() {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then((res) => {
-        console.log(res.data);
-        vm.cart = res.data.data;
-        vm.isLoading = false;
-      });
-    },
-    removeCartItem(id) {
-      const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      const vm = this;
-      vm.isLoading = true;
-      vm.cartRenew = true;
-      this.$http.delete(api).then((res) => {
-        console.log(res.data);
-        this.getCart();
-        vm.isLoading = false;
-        vm.cartRenew = false;
-      });
-    },
     loginChecker() {
       const api = `${process.env.APIPATH}/api/user/check`;
       const vm = this;
@@ -158,16 +132,14 @@ export default {
         vm.isLogin = false;
       });
     },
+    ...mapActions('cartModules', ['getCart', 'removeCartItem']),
+  },
+  computed: {
+    ...mapGetters('cartModules', ['cart']),
   },
   created() {
     this.loginChecker();
     this.getCart();
-    const vm = this;
-    // 註冊全域 EventBus 事件
-    // 自定義名稱 'cart:reolad'
-    vm.$bus.$on('cart:reolad', () => {
-      vm.getCart();
-    });
   },
 };
 </script>
